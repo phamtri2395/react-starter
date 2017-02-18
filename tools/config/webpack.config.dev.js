@@ -6,6 +6,11 @@ var path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 
+// Host
+const host = require('./environment.config').dev.host;
+// Environment port
+const port = require('./environment.config').dev.port;
+
 // Relative paths
 const src_path = path.resolve(__dirname, '../../src');
 const context = src_path;
@@ -19,10 +24,6 @@ const eslint_path = path.resolve(__dirname, './.eslintrc');
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
 // Hot Module Replacement (HMR)
 const useHMR = !!global.HMR;
-// Host
-const host = require('./environment.config').dev.host;
-// Environment port
-const port = require('./environment.config').dev.port;
 // Babel config
 const babelrc = require('./.babelrc');
 const babelConfig = Object.assign({}, babelrc, {
