@@ -31,6 +31,10 @@ const babelConfig = Object.assign({}, babelrc, {
   cacheDirectory: useHMR,
   presets: babelrc.presets.map(x => x === 'latest' ? ['latest', { es2015: { modules: false } }] : x),
 });
+// Babel config for development
+babelConfig.presets.unshift("react-hmre");
+babelConfig.plugins.unshift("react-hot-loader/babel");
+
 
 const config = {
   // The base directory for resolving the entry option

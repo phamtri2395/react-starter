@@ -10,8 +10,10 @@
     "react/prop-types": "warn",
     "import/no-extraneous-dependencies": "warn",
     "react/react-in-jsx-scope": "warn",
-    "react/jsx-filename-extension": "off",
-    "global-require": "warn"
+    "react/jsx-filename-extension": "warn",
+    "global-require": "warn",
+    "no-underscore-dangle": "warn",
+    "import/prefer-default-export": "off"
   },
   "env": {
     "browser": true,
