@@ -1,3 +1,7 @@
+/**
+ * Redux reducer
+ */
+
 import { combineReducers } from 'redux';
 
 
