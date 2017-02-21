@@ -1,5 +1,5 @@
 /**
- * Config for webpack dev mode
+ * Config for webpack development mode
  */
 
 var path = require('path');
@@ -72,6 +72,11 @@ const config = {
 
   // Plugins for Webpack compiler
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': '"development"',
+      __DEV__: true,
+    }),
+
     // Hot Module Replacement (HMR) + React Hot Reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

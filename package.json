@@ -9,7 +9,7 @@
     "eslint": "eslint -c ./tools/config/.eslintrc --color ./src/**",
     "stylelint": "stylelint --config ./tools/config/.stylelintrc \"src/**/*.css\"",
     "lint": "npm run eslint && npm run stylelint",
-    "build:dev": "webpack --progress --colors --config ./tools/config/webpack.config.dev.js"
+    "build": "gulp --gulpfile tools/gulp.js build"
   },
   "repository": {
     "type": "git",
