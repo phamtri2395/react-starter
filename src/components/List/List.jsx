@@ -8,7 +8,7 @@ export default class List extends Component {
   render() {
     const list = this.props.data ?
       this.props.data.map((el => (
-        <h3 id={el.id}>{el.first_name} - {el.last_name} (avatar: {el.avatar})</h3>
+        <h3 key={el.id}>{el.first_name} - {el.last_name} (avatar: {el.avatar})</h3>
       ))) : <span />;
 
     return (
