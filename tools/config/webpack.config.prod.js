@@ -63,7 +63,8 @@ const config = {
     chunks: isVerbose,
     chunkModules: isVerbose,
     cached: isVerbose,
-    cachedAssets: isVerbose
+    cachedAssets: isVerbose,
+    warnings: false
   },
 
   // Plugins for Webpack compiler

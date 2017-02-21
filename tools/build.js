@@ -9,6 +9,9 @@ const rimraf = require('rimraf');
 const webpack = require('webpack');
 const browserSync = require('browser-sync');
 
+// Check if verbose mode is on
+const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
+
 // Relative paths
 const dist_path = path.resolve(__dirname, '../public/dist');
 const ejs_path = path.resolve(__dirname, '../public/index.ejs');
@@ -36,6 +39,8 @@ const build = function() {
     const render = ejs.compile(template, { filename: ejs_path });
     const output = render({ debug: true, bundle: (isDebug) ? `/dist/${bundle}` : `./dist/${bundle}`, config });
     fs.writeFileSync(html_path, output, 'utf8');
+
+    console.log(stats.toString(webpackConfig.stats));
   });
 };
 
