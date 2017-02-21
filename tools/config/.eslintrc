@@ -13,7 +13,8 @@
     "react/jsx-filename-extension": "warn",
     "global-require": "warn",
     "no-underscore-dangle": "warn",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "no-unused-expressions": "warn"
   },
   "env": {
     "browser": true,
