@@ -14,14 +14,14 @@ export function ReduxMessage(type, payload) {
   };
 
   this.success = (newPayload, dispatch) => {
-    this.msg.payload = newPayload;
+    if (newPayload) this.msg.payload = newPayload;
     this.msg.status = messageStatus.success;
 
     if (dispatch) dispatch(this.msg);
   };
 
   this.error = (newPayload, dispatch) => {
-    this.msg.payload = newPayload;
+    if (newPayload) this.msg.payload = newPayload;
     this.msg.status = messageStatus.error;
 
     if (dispatch) dispatch(this.msg);
@@ -31,6 +31,9 @@ export function ReduxMessage(type, payload) {
 export const createAction = action => (...args) => (dispatch) => {
   const reduxMsg = action(...args);
   reduxMsg.submit(dispatch);
+
+  reduxMsg.success(null, null);
+  return reduxMsg;
 };
 
 export const createAjaxAction = (action, api) => (...args) => (dispatch) => {
@@ -44,4 +47,6 @@ export const createAjaxAction = (action, api) => (...args) => (dispatch) => {
   };
 
   api(...args).do(promise);
+
+  return reduxMsg;
 };
