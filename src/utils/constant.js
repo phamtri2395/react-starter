@@ -9,6 +9,10 @@ export const messageStatus = {
   error: -1
 };
 
+export const requestTimeout = {
+  response: 5000
+};
+
 
 /**
  * APIs

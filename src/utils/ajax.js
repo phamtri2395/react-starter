@@ -3,6 +3,7 @@
  */
 
 import request from 'superagent';
+import * as constant from './constant';
 
 export default function Ajax({ method, url, headers = {}, body = {} }) {
   this.method = method.toLowerCase();
@@ -12,13 +13,14 @@ export default function Ajax({ method, url, headers = {}, body = {} }) {
 
   this.do = next => (
     request[this.method](this.url)
-    .send(this.body)
-    .set(this.headers)
-    .end((err, res) => {
-      // Callback
-      typeof next === 'function' && next(err, res);
+      .timeout(constant.requestTimeout)
+      .send(this.body)
+      .set(this.headers)
+      .end((err, res) => {
+        // Callback
+        typeof next === 'function' && next(err, res);
 
-      return ({ err, res });
-    })
+        return ({ err, res });
+      })
   );
 }
