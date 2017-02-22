@@ -13,11 +13,13 @@ export function ReduxMessage(type, payload) {
     dispatch(this.msg);
   };
 
-  this.success = (newPayload, dispatch) => {
+  this.success = (newPayload, dispatch, next, cargs) => {
     if (newPayload) this.msg.payload = newPayload;
     this.msg.status = messageStatus.success;
 
     if (dispatch) dispatch(this.msg);
+    // Callback
+    typeof next === 'function' && next(...cargs);
   };
 
   this.error = (newPayload, dispatch) => {
@@ -36,14 +38,14 @@ export const createAction = action => (...args) => (dispatch) => {
   return reduxMsg;
 };
 
-export const createAjaxAction = (action, api) => (...args) => (dispatch) => {
+export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args) => (dispatch) => {
   const reduxMsg = action();
   reduxMsg.submit(dispatch);
 
   const promise = (err, res) => {
     if (err) reduxMsg.error(err, dispatch);
 
-    reduxMsg.success(res, dispatch);
+    reduxMsg.success(res, dispatch, chainAction, cargs);
   };
 
   api(...args).do(promise);

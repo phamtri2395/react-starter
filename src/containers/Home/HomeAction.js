@@ -12,4 +12,4 @@ export const fetchUser = createAjaxAction((id) => {
   console.log('Do something here...');
 
   return new ReduxMessage(constant.FETCH_USER, []);
-}, api.FetchUserList);
+}, api.FetchUserList, () => (console.log('Chaining action...')));
