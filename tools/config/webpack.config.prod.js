@@ -5,6 +5,7 @@
 var path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 // Host
 const host = require('./environment.config').prod.host;
@@ -82,6 +83,9 @@ const config = {
       },
     }),
 
+    // Deduplication
+    new webpack.optimize.DedupePlugin(),
+
     new webpack.optimize.AggressiveMergingPlugin(),
 
     // Emit a JSON file with assets paths
@@ -94,6 +98,14 @@ const config = {
     new webpack.LoaderOptionsPlugin({
       debug: false,
       minimize: true
+    }),
+
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.jsx?$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8
     })
   ],
 
