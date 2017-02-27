@@ -43,9 +43,11 @@ export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args
   reduxMsg.submit(dispatch);
 
   const promise = (err, res) => {
-    if (err) reduxMsg.error(err, dispatch);
-
-    reduxMsg.success(res, dispatch, chainAction, cargs);
+    if (err) {
+      reduxMsg.error(err, dispatch);
+    } else {
+      reduxMsg.success(res, dispatch, chainAction, cargs);
+    }
   };
 
   api(...args).do(promise);
