@@ -2,7 +2,7 @@
  * Standardize type of action using in project
  */
 
-import { messageStatus } from './constant';
+import { messageStatus } from '../utils/constant';
 
 export function ReduxMessage(type, payload) {
   this.msg = { type, payload, status: messageStatus.default };

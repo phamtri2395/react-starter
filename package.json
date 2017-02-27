@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp --gulpfile tools/gulp.js run",
     "eslint": "eslint -c ./tools/config/.eslintrc --color ./src/**",
+    "eslint:fix": "eslint -c ./tools/config/.eslintrc --color ./src/**/*.js* --ignore-pattern=*.json --fix",
     "stylelint": "stylelint --config ./tools/config/.stylelintrc \"src/**/*.css\"",
     "lint": "npm run eslint && npm run stylelint",
     "build": "gulp --gulpfile tools/gulp.js build",

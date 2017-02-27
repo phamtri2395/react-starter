@@ -1,4 +1,4 @@
-import { ReduxMessage, createAction, createAjaxAction } from '../../utils/action';
+import { ReduxMessage, createAction, createAjaxAction } from '../../redux/action';
 import * as api from '../../utils/api';
 import * as constant from '../../utils/constant';
 
