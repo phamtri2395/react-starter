@@ -39,7 +39,12 @@ export const createAction = action => (...args) => (dispatch) => {
 };
 
 export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args) => (dispatch) => {
-  const reduxMsg = action();
+  const submit = args ? args[0].submit : null;
+  const done = args ? args[0].done : null;
+
+  typeof submit === 'function' && submit();
+
+  const reduxMsg = action(args); console.log(reduxMsg);
   reduxMsg.submit(dispatch);
 
   const promise = (err, res) => {
@@ -48,9 +53,12 @@ export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args
     } else {
       reduxMsg.success(res, dispatch, chainAction, cargs);
     }
+
+    typeof done === 'function' && done();
   };
 
   api(...args).do(promise);
 
   return reduxMsg;
 };
+
