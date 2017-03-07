@@ -39,8 +39,8 @@ export const createAction = action => (...args) => (dispatch) => {
 };
 
 export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args) => (dispatch) => {
-  const submit = args ? args[0].submit : null;
-  const done = args ? args[0].done : null;
+  const submit = (args && args.length) ? args[0].submit : null;
+  const done = (args && args.length) ? args[0].done : null;
 
   typeof submit === 'function' && submit();
 
