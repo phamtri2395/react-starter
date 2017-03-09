@@ -38,27 +38,27 @@ export const createAction = action => (...args) => (dispatch) => {
   return reduxMsg;
 };
 
-export const createAjaxAction = (action, api, chainAction, ...cargs) => (...args) => (dispatch) => {
-  const submit = (args && args.length) ? args[0].submit : null;
-  const done = (args && args.length) ? args[0].done : null;
+export const createAjaxAction =
+  (action, api, chainAction, ...cargs) => (...aargs) => dispatch => (...args) => {
+    const submit = (args && args.length) ? args[0].submit : null;
+    const done = (args && args.length) ? args[0].done : null;
 
-  typeof submit === 'function' && submit();
+    typeof submit === 'function' && submit();
 
-  const reduxMsg = action(args); console.log(reduxMsg);
-  reduxMsg.submit(dispatch);
+    const reduxMsg = action(args);
+    reduxMsg.submit(dispatch);
 
-  const promise = (err, res) => {
-    if (err) {
-      reduxMsg.error(err, dispatch);
-    } else {
-      reduxMsg.success(res, dispatch, chainAction, cargs);
-    }
+    const promise = (err, res) => {
+      if (err) {
+        reduxMsg.error(err, dispatch);
+      } else {
+        reduxMsg.success(res, dispatch, chainAction, cargs);
+      }
 
-    typeof done === 'function' && done();
+      typeof done === 'function' && done();
+    };
+
+    api(...aargs).do(promise);
+
+    return reduxMsg;
   };
-
-  api(...args).do(promise);
-
-  return reduxMsg;
-};
-
