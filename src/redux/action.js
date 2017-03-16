@@ -42,7 +42,13 @@ export const createAjaxAction =
   (action, api, chainAction, ...cargs) => (...aargs) => dispatch => (...args) => {
     const submit = (args && args.length) ? args[0].submit : null;
     const done = (args && args.length) ? args[0].done : null;
+    const pre = (args && args.length) ? args[0].pre : null;
+    const suf = (args && args.length) ? args[0].suf : null;
 
+    // Pre-submit action
+    typeof pre === 'function' && pre();
+
+    // Submit action
     typeof submit === 'function' && submit();
 
     const reduxMsg = action(args);
@@ -55,7 +61,11 @@ export const createAjaxAction =
         reduxMsg.success(res, dispatch, chainAction, cargs);
       }
 
-      typeof done === 'function' && done();
+      // When done, do action
+      typeof done === 'function' && done(err, res);
+
+      // Suf-submit action
+      typeof suf === 'function' && suf(err, res);
     };
 
     api(...aargs).do(promise);
