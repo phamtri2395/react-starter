@@ -24,7 +24,7 @@ const eslint_path = path.resolve(__dirname, './.eslintrc');
 // Check if verbose mode is on
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
 // Babel config
-const babelrc = require('./.babelrc');
+const babelrc = require('./babel.config');
 const babelConfig = Object.assign({}, babelrc, {
   babelrc: false,
   cacheDirectory: false,
@@ -70,6 +70,10 @@ const config = {
 
   // Plugins for Webpack compiler
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
       __DEV__: false,

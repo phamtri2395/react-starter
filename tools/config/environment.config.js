@@ -7,3 +7,8 @@ exports.prod = {
   host: 'http://localhost',
   port: '5000'
 };
+
+exports.server = {
+  host: 'http://localhost',
+  port: '8000'
+}

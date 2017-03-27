@@ -41,7 +41,12 @@ const run = function() {
     const bundle = stats.compilation.chunks.find(x => x.name === 'main').files[0];
     const template = fs.readFileSync(ejs_path, 'utf8');
     const render = ejs.compile(template, { filename: ejs_path });
-    const output = render({ debug: true, bundle: (isDebug) ? `/dist/${bundle}` : `./dist/${bundle}`, config });
+    const output = render({
+      debug: true,
+      bundle: (isDebug) ? `/dist/${bundle}` : `./dist/${bundle}`,
+      htmlInjection: null,
+      config
+    });
     fs.writeFileSync(html_path, output, 'utf8');
 
     // Launch Browsersync after the initial bundling is complete

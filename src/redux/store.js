@@ -3,15 +3,23 @@
  */
 
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 
 import reducer from './reducer';
 
-// Store configuration
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk)
-);
+const devToolsEnhancers = composeWithDevTools({
+  // Specify here name, actionsBlacklist, actionsCreators and other options if needed
+});
 
-export default store;
+const middlewares = [thunk];
+
+
+// Store configuration
+export const enhancedStore = preloadedState => (
+  createStore(
+    reducer,
+    preloadedState,
+    devToolsEnhancers(applyMiddleware(...middlewares))
+  )
+);

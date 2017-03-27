@@ -2,17 +2,16 @@
  * Entry point of React
  */
 
-import React from 'react';
 import { render } from 'react-dom';
-import { Provider } from 'react-redux';
 
 import routes from './redux/routes';
-import store from './redux/store';
+import { enhancedStore } from './redux/store';
+import { createReduxApp } from './redux/provider';
+
+const App = createReduxApp(enhancedStore(), routes);
 
 // Render
 render(
-  <Provider store={store}>
-    {routes}
-  </Provider>,
+  App,
   document.getElementById('container')
 );

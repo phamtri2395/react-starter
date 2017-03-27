@@ -25,7 +25,7 @@ const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-
 // Hot Module Replacement (HMR)
 const useHMR = !!global.HMR;
 // Babel config
-const babelrc = require('./.babelrc');
+const babelrc = require('./babel.config');
 const babelConfig = Object.assign({}, babelrc, {
   babelrc: false,
   cacheDirectory: useHMR,

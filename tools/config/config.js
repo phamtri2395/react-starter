@@ -13,3 +13,7 @@ exports.prod = {
   webpack: webpackProdConfig,
   environment: environment.prod
 };
+
+exports.server = {
+  environment: environment.server
+};
