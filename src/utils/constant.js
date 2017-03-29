@@ -2,11 +2,10 @@
  * Miscellaneous
  */
 
-export const messageStatus = {
-  default: 0,
-  submit: 1,
-  success: 2,
-  error: -1
+export const messageSymbol = {
+  submit: type => `@@SUBMIT/${type}`,
+  success: type => `@@SUCCESS/${type}`,
+  error: type => `@@ERROR/${type}`
 };
 
 export const requestTimeout = {

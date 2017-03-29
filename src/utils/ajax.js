@@ -11,16 +11,16 @@ export default function Ajax({ method, url, headers = {}, body = {} }) {
   this.headers = headers;
   this.body = body;
 
-  this.do = next => (
+  this.then = next => (
     request[this.method](this.url)
       .timeout(constant.requestTimeout)
       .send(this.body)
       .set(this.headers)
       .end((err, res) => {
         // Callback
-        typeof next === 'function' && next(err, res);
+        typeof next === 'function' && next(res, err);
 
-        return ({ err, res });
+        return ({ res, err });
       })
   );
 }

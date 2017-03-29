@@ -1,15 +1,8 @@
-import { ReduxMessage, createAction, createAjaxAction } from '../../redux/action';
+import { createAction, createAjaxAction, ReduxAction } from '../../redux/action';
 import * as api from '../../utils/api';
 import * as constant from '../../utils/constant';
 
-export const print = createAction((data) => {
-  console.log('Do something here...');
 
-  return new ReduxMessage(constant.PRINT_HELLO, data);
-});
-
-export const fetchUser = createAjaxAction((id) => {
-  console.log('Do something here...');
-
-  return new ReduxMessage(constant.FETCH_USER, []);
-}, api.FetchUserList, () => (console.log('Chaining action...')));
+export const fetchUser = new ReduxAction(constant.FETCH_USER)(
+  id => api.FetchUserList(id)
+);

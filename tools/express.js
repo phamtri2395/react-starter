@@ -32,6 +32,7 @@ const handleRequest = function(req, res, next) {
     // Create store & pass to Router Context
     const store = enhancedStore();
     const appRoutes = <RouterContext {...props}/>;
+    console.log(props.components[props.components.length - 1].WrappedComponent);
 
     // Render the component to a string
     const htmlInjection = renderToString(createReduxApp(store, appRoutes));

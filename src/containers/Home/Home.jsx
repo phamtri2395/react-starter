@@ -18,7 +18,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchUser(15);
+    const promise = this.props.fetchUser(15);
+    promise.sayHello();
   }
 
   render() {

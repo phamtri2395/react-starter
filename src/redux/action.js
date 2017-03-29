@@ -2,34 +2,38 @@
  * Standardize type of action using in project
  */
 
-import { messageStatus } from '../utils/constant';
+import { messageSymbol } from '../utils/constant';
 
-export function ReduxMessage(type, payload) {
-  this.msg = { type, payload, status: messageStatus.default };
 
-  this.submit = (dispatch) => {
-    this.msg.status = messageStatus.submit;
+const ReduxMessage = function(type, payload, dispatch) {
+  this.msg = { type, payload };
+  this.dispatch = dispatch;
 
-    dispatch(this.msg);
+  this.submit = () => {
+    this.dispatch({
+      type: messageSymbol.submit(this.msg.type),
+      payload: this.msg.payload
+    });
   };
 
-  this.success = (newPayload, dispatch, next, cargs) => {
-    if (newPayload) this.msg.payload = newPayload;
-    this.msg.status = messageStatus.success;
+  this.success = (newPayload) => {
+    const mergedPayload = { ...this.msg.payload, ...newPayload };
 
-    if (dispatch) dispatch(this.msg);
-    // Callback
-    typeof next === 'function' && next(...cargs);
+    this.dispatch({
+      type: messageSymbol.success(this.msg.type),
+      payload: mergedPayload
+    });
   };
 
-  this.error = (newPayload, dispatch) => {
-    if (newPayload) this.msg.payload = newPayload;
-    this.msg.status = messageStatus.error;
-
-    if (dispatch) dispatch(this.msg);
+  this.error = (errorMessage) => {
+    this.dispatch({
+      type: messageSymbol.error(this.msg.type),
+      payload: errorMessage
+    });
   };
-}
+};
 
+/** Old codes
 export const createAction = action => (...args) => (dispatch) => {
   const reduxMsg = action(...args);
   reduxMsg.submit(dispatch);
@@ -72,3 +76,60 @@ export const createAjaxAction =
 
     return reduxMsg;
   };
+**/
+
+const ChainListPromises = function() {
+  this.subcribers = [];
+
+  this.sayHello = () => {
+    console.log('Hello World');
+  };
+};
+
+const ReduxPromise = function(action, message) {
+  this.action = action;
+  this.message = message;
+
+  this.createPromise = () => (
+    new Promise((resolve, reject) => {
+      const result = this.action();
+      this.message.submit(); // Dispatch submit message
+
+      // Check if action is promise
+      const isPromise = typeof result.then === 'function';
+
+      if (isPromise) { // If promise, resolve when promise's done
+        result.then((res, err) => {
+          console.log(this.message);
+          if (err) {
+            this.message.error(err); // Dispatch error message
+
+            reject(null, err);
+          }
+
+          this.message.success(res); // Dispatch success message
+
+          resolve(res, null);
+        });
+      } else { // If not promise, return result
+        this.message.success(result); // Dispatch success message
+
+        resolve(result);
+      }
+    })
+  );
+};
+
+// Inherit from chainListPromises Object
+ReduxPromise.prototype = new ChainListPromises();
+
+export const ReduxAction = (type, payload) => action => (...args) => (dispatch) => {
+  const promise = new ReduxPromise(
+    () => action(...args),
+    new ReduxMessage(type, payload, dispatch)
+  );
+
+  promise.createPromise();
+
+  return promise;
+};
