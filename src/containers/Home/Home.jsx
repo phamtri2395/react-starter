@@ -15,23 +15,36 @@ const mapActionToProps = dispatch => (
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      loading: true
+    };
   }
 
   componentDidMount() {
-    const promise = this.props.fetchUser(15);
-    promise.sayHello();
+    const preFetchUserList = () => (
+      this.setState({
+        loading: true
+      })
+    );
+
+    const sufFetchUserList = () => (
+      this.setState({
+        loading: false
+      })
+    );
+
+    const promise = this.props.fetchUserList(15)({
+      pre: preFetchUserList,
+      suf: sufFetchUserList
+    });
   }
 
   render() {
-    const loading = this.props.msg ?
-      <h3>{ this.props.msg }</h3> :
-      <span />;
-
     return (
       <div>
         <h2>Homepage</h2>
-        { loading }
-        <List data={this.props.data} />
+        { this.state.loading ? <h3>Loading...</h3> : <List collection={this.props.data} /> }
       </div>
     );
   }

@@ -33,103 +33,62 @@ const ReduxMessage = function(type, payload, dispatch) {
   };
 };
 
-/** Old codes
-export const createAction = action => (...args) => (dispatch) => {
-  const reduxMsg = action(...args);
-  reduxMsg.submit(dispatch);
-
-  reduxMsg.success(null, null);
-  return reduxMsg;
-};
-
-export const createAjaxAction =
-  (action, api, chainAction, ...cargs) => (...aargs) => dispatch => (...args) => {
-    const submit = (args && args.length) ? args[0].submit : null;
-    const done = (args && args.length) ? args[0].done : null;
-    const pre = (args && args.length) ? args[0].pre : null;
-    const suf = (args && args.length) ? args[0].suf : null;
-
-    // Pre-submit action
-    typeof pre === 'function' && pre();
-
-    // Submit action
-    typeof submit === 'function' && submit();
-
-    const reduxMsg = action(args);
-    reduxMsg.submit(dispatch);
-
-    const promise = (err, res) => {
-      if (err) {
-        reduxMsg.error(err, dispatch);
-      } else {
-        reduxMsg.success(res, dispatch, chainAction, cargs);
-      }
-
-      // When done, do action
-      typeof done === 'function' && done(err, res);
-
-      // Suf-submit action
-      typeof suf === 'function' && suf(err, res);
-    };
-
-    api(...aargs).do(promise);
-
-    return reduxMsg;
-  };
-**/
-
-const ChainListPromises = function() {
-  this.subcribers = [];
-
-  this.sayHello = () => {
-    console.log('Hello World');
-  };
-};
-
-const ReduxPromise = function(action, message) {
+const ReduxPromise = function(action, message, { pre, suf }) {
   this.action = action;
   this.message = message;
+  this.next = null;
 
-  this.createPromise = () => (
-    new Promise((resolve, reject) => {
+  this.createPromise = () => {
+    typeof pre === 'function' && pre(); // Calling pre-function
+
+    return new Promise((resolve, reject) => {
       const result = this.action();
       this.message.submit(); // Dispatch submit message
 
       // Check if action is promise
-      const isPromise = typeof result.then === 'function';
+      const isPromise = result && typeof result.then === 'function';
 
       if (isPromise) { // If promise, resolve when promise's done
         result.then((res, err) => {
-          console.log(this.message);
+          typeof this.next === 'function' && this.next(res.body, err); // Calling callback
+
           if (err) {
             this.message.error(err); // Dispatch error message
+            typeof suf === 'function' && suf(); // Calling suf-function
 
-            reject(null, err);
+            reject(err);
           }
 
-          this.message.success(res); // Dispatch success message
+          this.message.success(res.body); // Dispatch success message
+          typeof suf === 'function' && suf(); // Calling suf-function
 
-          resolve(res, null);
+          resolve(res.body);
         });
       } else { // If not promise, return result
+        typeof this.next === 'function' && this.next(result, null); // Calling callback
+
         this.message.success(result); // Dispatch success message
+        typeof suf === 'function' && suf(); // Calling suf-function
 
-        resolve(result);
+        resolve(result, null);
       }
-    })
-  );
+    });
+  };
+
+  this.then = (next) => {
+    if (typeof next === 'function') this.next = next;
+  };
 };
 
-// Inherit from chainListPromises Object
-ReduxPromise.prototype = new ChainListPromises();
+export const ReduxAction =
+  (type, payload) => action => (...args) => dispatch => ({ pre, suf } = {}) => {
+    const promise = new ReduxPromise(
+      () => action(...args),
+      new ReduxMessage(type, payload, dispatch),
+      { pre, suf }
+    );
 
-export const ReduxAction = (type, payload) => action => (...args) => (dispatch) => {
-  const promise = new ReduxPromise(
-    () => action(...args),
-    new ReduxMessage(type, payload, dispatch)
-  );
+    promise.createPromise();
 
-  promise.createPromise();
-
-  return promise;
-};
+    return promise;
+  };

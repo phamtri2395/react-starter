@@ -1,6 +1,6 @@
 {
   "name": "react-starter",
-  "version": "0.2.0",
+  "version": "0.2.4",
   "description": "React starter kit",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "build": "gulp --gulpfile tools/gulp.js build",
     "build:dev": "cross-env mode=dev npm run build",
     "build:prod": "cross-env mode=prod npm run build",
-    "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react"
+    "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
+    "patch": "npm --no-git-tag-version version patch && git add . && git commit -m"
   },
   "repository": {
     "type": "git",

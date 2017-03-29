@@ -3,16 +3,24 @@
  */
 
 import Ajax from './ajax';
-import * as constant from './constant';
+
+export const requestTimeout = {
+  response: 5000
+};
+
+export const URLs = {
+  fetchUserList: { method: 'GET', url: 'https://reqres.in/api/users' }
+};
 
 
 /**
  * Home's apis
  */
 
-export const FetchUserList = id => (
+export const FetchUserList = () => (
   new Ajax({
-    ...constant.apiList.getAllUser,
+    ...URLs.fetchUserList,
+    requestTimeout,
     headers: { 'Content-Type': 'application/json' }
   })
 );

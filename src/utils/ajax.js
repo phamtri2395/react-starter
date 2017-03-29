@@ -3,9 +3,8 @@
  */
 
 import request from 'superagent';
-import * as constant from './constant';
 
-export default function Ajax({ method, url, headers = {}, body = {} }) {
+export default function Ajax({ method, url, requestTimeout, headers = {}, body = {} }) {
   this.method = method.toLowerCase();
   this.url = url;
   this.headers = headers;
@@ -13,14 +12,14 @@ export default function Ajax({ method, url, headers = {}, body = {} }) {
 
   this.then = next => (
     request[this.method](this.url)
-      .timeout(constant.requestTimeout)
+      .timeout(requestTimeout)
       .send(this.body)
       .set(this.headers)
       .end((err, res) => {
         // Callback
         typeof next === 'function' && next(res, err);
 
-        return ({ res, err });
+        return (res, err);
       })
   );
 }

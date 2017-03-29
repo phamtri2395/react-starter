@@ -1,20 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class List extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const list = this.props.data ?
-      this.props.data.map((el => (
-        <h3 key={el.id}>{el.first_name} - {el.last_name} (avatar: {el.avatar})</h3>
-      ))) : <span />;
-
-    return (
-      <div>
-        { list }
+const List = ({ collection }) => (
+  <div>
+    { collection.map((el, idx) => (
+      <div key={el.id}>
+        <h4>ID: {el.id}</h4>
+        <img style={{ display: 'inline-block' }} src={el.avatar} alt={el.id} />
+        <h5>Name: {el.first_name} {el.last_name}</h5>
       </div>
-    );
-  }
-}
+    )) }
+  </div>
+);
+
+export default List;
