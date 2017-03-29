@@ -1,6 +1,6 @@
 {
   "name": "react-starter",
-  "version": "0.2.4",
+  "version": "0.2.3",
   "description": "React starter kit",
   "main": "index.js",
   "scripts": {
