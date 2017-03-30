@@ -33,13 +33,14 @@ const ReduxMessage = function(type, payload, dispatch) {
   };
 };
 
-const ReduxPromise = function(action, message, { pre, suf }) {
+const ReduxPromise = function(action, message) {
   this.action = action;
   this.message = message;
+  this.prev = null;
   this.next = null;
 
   this.createPromise = () => {
-    typeof pre === 'function' && pre(); // Calling pre-function
+    typeof this.prev === 'function' && this.prev(); // Calling prev function
 
     return new Promise((resolve, reject) => {
       const result = this.action();
@@ -50,25 +51,24 @@ const ReduxPromise = function(action, message, { pre, suf }) {
 
       if (isPromise) { // If promise, resolve when promise's done
         result.then((res, err) => {
-          typeof this.next === 'function' && this.next(res.body, err); // Calling callback
-
           if (err) {
             this.message.error(err); // Dispatch error message
-            typeof suf === 'function' && suf(); // Calling suf-function
+
+            typeof this.next === 'function' && this.next(null, err); // Calling next function
 
             reject(err);
           }
 
           this.message.success(res.body); // Dispatch success message
-          typeof suf === 'function' && suf(); // Calling suf-function
+
+          typeof this.next === 'function' && this.next(res.body, null); // Calling next function
 
           resolve(res.body);
         });
       } else { // If not promise, return result
-        typeof this.next === 'function' && this.next(result, null); // Calling callback
-
         this.message.success(result); // Dispatch success message
-        typeof suf === 'function' && suf(); // Calling suf-function
+
+        typeof this.next === 'function' && this.next(result, null); // Calling next function
 
         resolve(result, null);
       }
@@ -78,17 +78,30 @@ const ReduxPromise = function(action, message, { pre, suf }) {
   this.then = (next) => {
     if (typeof next === 'function') this.next = next;
   };
+
+  this.before = (prev) => {
+    if (typeof prev === 'function') this.prev = prev;
+  };
 };
 
 export const ReduxAction =
-  (type, payload) => action => (...args) => dispatch => ({ pre, suf } = {}) => {
+  (type, payload) => action => (...args) => (dispatch) => {
     const promise = new ReduxPromise(
       () => action(...args),
-      new ReduxMessage(type, payload, dispatch),
-      { pre, suf }
+      new ReduxMessage(type, payload, dispatch)
     );
 
-    promise.createPromise();
+    const execPromise = () => {
+      promise.createPromise();
+    };
 
-    return promise;
+    execPromise.prev = (prev) => {
+      typeof prev === 'function' && promise.before(prev);
+    };
+
+    execPromise.next = (next) => {
+      typeof next === 'function' && promise.then(next);
+    };
+
+    return execPromise;
   };

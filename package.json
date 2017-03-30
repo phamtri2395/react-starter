@@ -1,8 +1,8 @@
 {
-  "name": "react-starter",
+  "name": "redux-starter",
   "version": "0.2.3",
-  "description": "React starter kit",
-  "main": "index.js",
+  "description": "Redux Starter Kit",
+  "main": "gulp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "gulp --gulpfile tools/gulp.js run",
@@ -14,18 +14,20 @@
     "build:dev": "cross-env mode=dev npm run build",
     "build:prod": "cross-env mode=prod npm run build",
     "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
-    "patch": "npm --no-git-tag-version version patch && git add . && git commit -m"
+    "version:patch": "npm version patch -m \"Patch version to %s\"",
+    "version:minor": "npm version minor -m \"Update version to %s\"",
+    "version:major": "npm version major -m \"Upgrade version to %s\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/phamtri2395/react-starter.git"
+    "url": "git+https://github.com/phamtri2395/redux-starter.git"
   },
   "author": "phamtri2395@gmail.com",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/phamtri2395/react-starter/issues"
+    "url": "https://github.com/phamtri2395/redux-starter/issues"
   },
-  "homepage": "https://github.com/phamtri2395/react-starter#readme",
+  "homepage": "https://github.com/phamtri2395/redux-starter#readme",
   "dependencies": {
     "babel-cli": "^6.24.0",
     "browser-sync": "^2.18.8",

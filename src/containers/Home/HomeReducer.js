@@ -4,13 +4,16 @@ import * as constant from '../../utils/constant';
 const { submit, success, error } = constant.messageSymbol;
 
 const initialState = {
-  data: null
+  data: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case success(constant.FETCH_USER_LIST):
-      return { ...state, msg: null, data: action.payload.data };
+      return { ...state, data: action.payload.data };
+
+    case success(constant.FETCH_SINGLE_USER):
+      return { ...state, data: [...state.data, action.payload.data] };
 
     default:
       return state;

@@ -17,27 +17,20 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      loading: true
+      loading: false
     };
   }
 
   componentDidMount() {
-    const preFetchUserList = () => (
-      this.setState({
-        loading: true
-      })
-    );
+    const fetch1 = this.props.fetchSingleUser(1);
+    const fetch2 = this.props.fetchSingleUser(2);
+    const fetch3 = this.props.fetchSingleUser(3);
 
-    const sufFetchUserList = () => (
-      this.setState({
-        loading: false
-      })
-    );
+    // Link async call in order, make them sync together
+    fetch1.next(fetch2);
+    fetch2.next(fetch3);
 
-    const promise = this.props.fetchUserList(15)({
-      pre: preFetchUserList,
-      suf: sufFetchUserList
-    });
+    fetch1();
   }
 
   render() {
