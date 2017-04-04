@@ -27,6 +27,8 @@
       "Document"
     ],
     "doc:components": "gulp --gulpfile tools/gulp.js doc-react-component",
+    "story": "styleguidist server --config ./tools/config/styleguide.config.js",
+    "story:build": "styleguidist build --config ./tools/config/styleguide.config.js",
     "// 5": [
       "Version control"
     ],
@@ -110,6 +112,7 @@
     "postcss-selector-not": "^2.0.0",
     "react-docgen": "^2.13.0",
     "react-hot-loader": "^3.0.0-beta.2",
+    "react-styleguidist": "^5.0.3",
     "redux-devtools-extension": "^2.13.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.1",

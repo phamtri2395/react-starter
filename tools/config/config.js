@@ -14,6 +14,10 @@ exports.dev = {
   environment: environment.dev
 };
 
+exports.story = {
+  environment: environment.story
+};
+
 exports.prod = {
   webpack: webpackProdConfig,
   environment: environment.prod

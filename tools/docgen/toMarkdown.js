@@ -23,10 +23,10 @@ const mPropTypes = function(type) {
       }).join('|') +
       ')';
   } else {
-    values = type.value;
+    values = type.value.name;
   }
 
-  return `${type.name}(${values ? values.name : ''})`;
+  return `${type.name} ${values ? values : ''}`;
 };
 
 const mBody = function(props) {

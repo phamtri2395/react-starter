@@ -38,7 +38,7 @@ exports.component = function() {
       // Generate markdown from doc
       const markdownContent = generateMarkdown(docName, docContent);
 
-      fs.writeFileSync(`${components_doc_dir}/${docName}.md`, markdownContent);
+      fs.writeFileSync(path.join(`${components_doc_dir}`, `${docName}.md`), markdownContent);
     });
   });
 };
