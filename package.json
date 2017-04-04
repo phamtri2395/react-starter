@@ -32,9 +32,9 @@
     "// 5": [
       "Version control"
     ],
-    "version:patch:tag": "git add . && npm version patch -m \"Patch version & tagged %s\"",
-    "version:minor:tag": "git add . && npm version minor -m \"Update version & tagged %s\"",
-    "version:major:tag": "git add . && npm version major -m \"Upgrade version & tagged %s\"",
+    "version:patch:tag": "git add . && npm version patch -m \"Patch version & tag %s\"",
+    "version:minor:tag": "git add . && npm version minor -m \"Update version & tag %s\"",
+    "version:major:tag": "git add . && npm version major -m \"Upgrade version & tag %s\"",
     "version:patch": "git add . && npm --no-git-tag-version version patch && git add . && git commit -m \"Patch version & commit\"",
     "version:minor": "git add . && npm --no-git-tag-version version minor && git add . && git commit -m \"Update version & commit\"",
     "version:major": "git add . && npm --no-git-tag-version version major && git add . && git commit -m \"Upgrade version & commit\""
