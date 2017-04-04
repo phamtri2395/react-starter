@@ -5,18 +5,25 @@
   "main": "gulp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+
     "start": "gulp --gulpfile tools/gulp.js run",
+    "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
+
+    "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint -c ./tools/config/.eslintrc --color ./src/**",
     "eslint:fix": "eslint -c ./tools/config/.eslintrc --color ./src/**/*.js* --ignore-pattern=*.json --fix",
     "stylelint": "stylelint --config ./tools/config/.stylelintrc \"src/**/*.css\"",
-    "lint": "npm run eslint && npm run stylelint",
+
     "build": "gulp --gulpfile tools/gulp.js build",
     "build:dev": "cross-env mode=dev npm run build",
     "build:prod": "cross-env mode=prod npm run build",
-    "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
-    "version:patch": "npm version patch -m \"Patch version to %s\"",
-    "version:minor": "npm version minor -m \"Update version to %s\"",
-    "version:major": "npm version major -m \"Upgrade version to %s\""
+
+    "version:patch:tag": "git add . && npm version patch -m \"Patch version to %s\"",
+    "version:minor:tag": "git add . && npm version minor -m \"Update version to %s\"",
+    "version:major:tag": "git add . && npm version major -m \"Upgrade version to %s\"",
+    "version:patch": "git add . && npm --no-git-tag-version version patch -m \"Patch version to %s\"",
+    "version:minor": "git add . && npm --no-git-tag-version version minor -m \"Update version to %s\"",
+    "version:major": "git add . && npm --no-git-tag-version version major -m \"Upgrade version to %s\""
   },
   "repository": {
     "type": "git",
