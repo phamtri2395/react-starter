@@ -201,3 +201,6 @@ $RECYCLE.BIN/
 # Public
 public/dist/
 public/index.html
+
+# Documents
+documents/components/

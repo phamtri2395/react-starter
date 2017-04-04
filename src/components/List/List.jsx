@@ -12,4 +12,8 @@ const List = ({ collection }) => (
   </div>
 );
 
+List.propTypes = {
+  collection: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+};
+
 export default List;
