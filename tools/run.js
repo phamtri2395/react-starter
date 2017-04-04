@@ -1,5 +1,7 @@
 /**
- * Do tasks to start server
+ * Start server with Webpack & browserSync
+ * Run in both development & production mode
+ * However, this method does not support for server-side rendering
  */
 
 const fs = require('fs');

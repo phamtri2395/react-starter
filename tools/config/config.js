@@ -1,3 +1,8 @@
+/**
+ * Configuration for server
+ * Each mode using their own Webpack config & environment variables
+ */
+
 var environment = require('./environment.config.js');
 var webpackDevConfig = require('./webpack.config.dev');
 var webpackProdConfig = require('./webpack.config.prod');

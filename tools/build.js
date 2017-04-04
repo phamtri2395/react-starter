@@ -1,5 +1,7 @@
 /**
- * Build bundle
+ * Build all files into bundle using Webpack
+ * Run in both development & production mode
+ * In production mode, bundle will be optimized, compressed & removed HMR, debug
  */
 
 const fs = require('fs');

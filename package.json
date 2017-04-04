@@ -5,19 +5,31 @@
   "main": "gulp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
+    "// 1": [
+      "Start server"
+    ],
     "start": "gulp --gulpfile tools/gulp.js run",
     "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
-
+    "// 2": [
+      "Linter"
+    ],
     "lint": "npm run eslint && npm run stylelint",
     "eslint": "eslint -c ./tools/config/.eslintrc --color ./src/**",
     "eslint:fix": "eslint -c ./tools/config/.eslintrc --color ./src/**/*.js* --ignore-pattern=*.json --fix",
     "stylelint": "stylelint --config ./tools/config/.stylelintrc \"src/**/*.css\"",
-
+    "// 3": [
+      "Build"
+    ],
     "build": "gulp --gulpfile tools/gulp.js build",
     "build:dev": "cross-env mode=dev npm run build",
     "build:prod": "cross-env mode=prod npm run build",
-
+    "// 4": [
+      "Document"
+    ],
+    "doc:components": "gulp --gulpfile tools/gulp.js doc-react-component",
+    "// 5": [
+      "Version control"
+    ],
     "version:patch:tag": "git add . && npm version patch -m \"Patch version to %s\"",
     "version:minor:tag": "git add . && npm version minor -m \"Update version to %s\"",
     "version:major:tag": "git add . && npm version major -m \"Upgrade version to %s\"",
@@ -80,6 +92,7 @@
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.9.0",
     "file-loader": "^0.9.0",
+    "glob": "^7.1.1",
     "json-loader": "^0.5.4",
     "node-sass": "^4.5.0",
     "postcss": "^5.2.10",
@@ -95,6 +108,7 @@
     "postcss-nesting": "^2.3.1",
     "postcss-selector-matches": "^2.0.5",
     "postcss-selector-not": "^2.0.0",
+    "react-docgen": "^2.13.0",
     "react-hot-loader": "^3.0.0-beta.2",
     "redux-devtools-extension": "^2.13.0",
     "sass-loader": "^6.0.2",

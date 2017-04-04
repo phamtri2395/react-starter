@@ -1,3 +1,7 @@
+/**
+ * Environment config
+ */
+
 exports.dev = {
   host: 'http://localhost',
   port: '3000'

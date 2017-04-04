@@ -1,5 +1,7 @@
 /**
- * Config for webpack production mode
+ * Webpack configuration in production mode
+ * Turn off debug, HMR, print linter's warning,...
+ * Fully optimize bundle files & assets
  */
 
 var path = require('path');

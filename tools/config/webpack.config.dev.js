@@ -1,5 +1,7 @@
 /**
- * Config for webpack development mode
+ * Webpack configuration in development mode
+ * Turn on debug, HMR, print linter's warning,...
+ * Not optimize bundle files & assets
  */
 
 var path = require('path');

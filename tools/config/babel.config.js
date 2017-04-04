@@ -1,3 +1,7 @@
+/**
+ * Babel config for Webpack
+ */
+
 module.exports = {
   "presets": [
     "latest",

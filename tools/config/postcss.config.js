@@ -1,4 +1,6 @@
-/* eslint-disable global-require */
+/**
+ * Stylelint config
+ */
 
 module.exports = () => ({
   plugins: [

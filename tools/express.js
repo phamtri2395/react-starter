@@ -1,3 +1,9 @@
+/**
+ * Start express sever
+ * Do server-side rendering
+ * You can exec side-action in handleRequest function
+ */
+
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
