@@ -1,6 +1,6 @@
 {
   "name": "redux-starter",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Redux Starter Kit",
   "main": "gulp.js",
   "scripts": {
