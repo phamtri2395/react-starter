@@ -16,7 +16,7 @@ class Root extends Component {
   render() {
     return (
       <div>
-        <h1>Welcome to React Starter</h1>
+        <h1>Welcome to Redux Starter</h1>
         <Link style={linkStyle} to="/home">Show Home Page</Link>
         <Link style={linkStyle} to="/">Show Root Page</Link>
         {this.props.children}

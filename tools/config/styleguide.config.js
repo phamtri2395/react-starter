@@ -15,7 +15,10 @@ module.exports = {
   serverHost: environment.host,
   serverPort: environment.port,
   webpackConfig: require('./webpack.config.dev'),
-  components: `../../src/components/**/*.${lookup_extension}`, // Where to look for components
+  components: () => ([
+    `../../src/components/**/*.${lookup_extension}`,
+    `../../src/containers/**/components/*.${lookup_extension}`
+  ]), // Where to look for components
   getExampleFilename: function(componentPath) {
     const filename = path.basename(componentPath, `.${lookup_extension}`);
 
