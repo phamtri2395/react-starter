@@ -83,10 +83,13 @@ const config = {
 
     // Optimize the bundle in release (production) mode
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
+      minimize: true,
+      sourceMap: false,
+      warnings: false,
+      mangle: true,
       compress: {
-        warnings: isVerbose,
-      },
+          drop_console: true
+      }
     }),
 
     // Deduplication

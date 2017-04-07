@@ -22,6 +22,8 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    console.log('This log only appears in development mode');
+
     const fetch1 = this.props.fetchSingleUser(1);
     const fetch2 = this.props.fetchSingleUser(2);
     const fetch3 = this.props.fetchSingleUser(3);
