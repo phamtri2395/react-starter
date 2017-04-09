@@ -2,7 +2,7 @@
  * Standardize type of action using in project
  */
 
-import { messageSymbol } from '../utils/constant';
+import { messageSymbol } from '../constants/Misc';
 
 
 const ReduxMessage = function(type, payload, dispatch) {

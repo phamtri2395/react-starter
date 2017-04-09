@@ -2,7 +2,7 @@
  * Define API handling methods
  */
 
-import Ajax from './ajax';
+import Ajax from '../utils/ajax';
 
 export const requestTimeout = {
   response: 5000
