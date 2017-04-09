@@ -2,10 +2,10 @@ import React from 'react';
 
 
 /**
- * Custom Item to display user's info
+ * Custom Item for displaying user's info
  */
 
-const userInfo = ({ id, firstName, lastName, avatar }) => (
+const userInfoItem = ({ id, firstName, lastName, avatar }) => (
   <div>
     <h4>ID: {id}</h4>
     <img style={{ display: 'inline-block' }} src={avatar} alt={id} />
@@ -13,11 +13,11 @@ const userInfo = ({ id, firstName, lastName, avatar }) => (
   </div>
 );
 
-userInfo.propTypes = {
+userInfoItem.propTypes = {
   id: React.PropTypes.number.isRequired,
   firstName: React.PropTypes.string.isRequired,
   lastName: React.PropTypes.string.isRequired,
   avatar: React.PropTypes.string.isRequired
 };
 
-export default userInfo;
+export default userInfoItem;

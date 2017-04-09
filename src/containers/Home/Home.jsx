@@ -14,6 +14,7 @@ const enhancedUserInfo = renameProps({
   first_name: 'firstName'
 })(userInfoItem);
 
+
 const mapStoreToProps = store => (store.HomeReducer);
 const mapActionToProps = dispatch => (
   bindActionCreators(HomeAction, dispatch)

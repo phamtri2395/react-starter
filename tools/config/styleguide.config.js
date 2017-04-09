@@ -17,6 +17,7 @@ module.exports = {
   serverHost: environment.host,
   serverPort: environment.port,
   webpackConfig: require('./webpack.config.dev'),
+  skipComponentsWithoutExample: false,
   components: () => {
     // Find all components folder in src/components/**/*.jsx & src/containers/**/components/**/*.jsx
     const abs_path = glob.sync(`${src_path}/components/**/*.${lookup_extension}`).concat(
