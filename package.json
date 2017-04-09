@@ -9,7 +9,7 @@
       "Start server"
     ],
     "start": "gulp --gulpfile tools/gulp.js run",
-    "server": "npm run build:prod && cross-env mode=server babel-node ./tools/express.js --presets es2015,stage-1,react",
+    "server": "npm run build:prod && npm run build:server && cross-env mode=server node ./dist/server.js",
     "// 2": [
       "Linter"
     ],
@@ -23,6 +23,7 @@
     "build": "gulp --gulpfile tools/gulp.js build",
     "build:dev": "cross-env mode=dev npm run build",
     "build:prod": "cross-env mode=prod npm run build",
+    "build:server": "cross-env mode=server webpack --config tools/config/webpack.config.server.js",
     "// 4": [
       "Document"
     ],
@@ -50,7 +51,6 @@
   },
   "homepage": "https://github.com/phamtri2395/redux-starter#readme",
   "dependencies": {
-    "babel-cli": "^6.24.0",
     "browser-sync": "^2.18.8",
     "classnames": "^2.2.5",
     "cross-env": "^3.2.4",
@@ -121,6 +121,7 @@
     "stylelint-config-standard": "^15.0.1",
     "url-loader": "^0.5.7",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-hot-middleware": "^2.15.0"
+    "webpack-hot-middleware": "^2.15.0",
+    "webpack-node-externals": "^1.5.4"
   }
 }

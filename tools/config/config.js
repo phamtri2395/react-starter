@@ -6,6 +6,7 @@
 var environment = require('./environment.config.js');
 var webpackDevConfig = require('./webpack.config.dev');
 var webpackProdConfig = require('./webpack.config.prod');
+var webpackServerConfig = require('./webpack.config.server');
 
 exports = module.exports = {};
 
@@ -24,5 +25,6 @@ exports.prod = {
 };
 
 exports.server = {
+  webpack: webpackServerConfig,
   environment: environment.server
 };

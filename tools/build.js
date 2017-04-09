@@ -15,9 +15,9 @@ const browserSync = require('browser-sync');
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
 
 // Relative paths
-const dist_path = path.resolve(__dirname, '../public/dist');
-const ejs_path = path.resolve(__dirname, '../public/index.ejs');
-const html_path = path.resolve(__dirname, '../public/index.html');
+const dist_path = path.resolve(__dirname, '../dist/public/bundle');
+const ejs_path = path.resolve(__dirname, '../dist/index.ejs');
+const html_path = path.resolve(__dirname, '../dist/public/index.html');
 
 // Hot Module Replacement (HMR)
 global.HMR = !process.argv.includes('--no-hmr');
@@ -41,7 +41,7 @@ const build = function() {
     const render = ejs.compile(template, { filename: ejs_path });
     const output = render({
       debug: isDebug,
-      bundle: `./dist/${bundle}`,
+      bundle: `./bundle/${bundle}`,
       htmlInjection: null,
       config
     });

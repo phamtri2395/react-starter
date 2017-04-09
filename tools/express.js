@@ -15,17 +15,17 @@ import ejs from 'ejs';
 import routes from '../src/redux/routes';
 import { enhancedStore } from '../src/redux/store';
 import { createReduxApp } from '../src/redux/provider';
-import assetsInfo from '../public/dist/assets.json';
+import assetsInfo from '../dist/public/bundle/assets.json';
 
 const config = require('./config/config.js').server;
-const ejs_path = path.resolve(__dirname, '../public/index.ejs');
+const ejs_path = path.resolve(__dirname, './dist/index.ejs');
 const bundle_path = `.${assetsInfo.main.js}`;
 
 const app = express();
 const port = config.environment.port;
 
 // Serve static files
-app.use(express.static(path.resolve(__dirname, '../public')));
+app.use(express.static(path.resolve(__dirname, './dist/public')));
 
 
 /**
@@ -38,7 +38,6 @@ const handleRequest = function(req, res, next) {
     // Create store & pass to Router Context
     const store = enhancedStore();
     const appRoutes = <RouterContext {...props}/>;
-    console.log(props.components[props.components.length - 1].WrappedComponent);
 
     // Render the component to a string
     const htmlInjection = renderToString(createReduxApp(store, appRoutes));

@@ -12,9 +12,9 @@ const webpack = require('webpack');
 const browserSync = require('browser-sync');
 
 // Relative paths
-const dist_path = path.resolve(__dirname, '../public/dist');
-const ejs_path = path.resolve(__dirname, '../public/index.ejs');
-const html_path = path.resolve(__dirname, '../public/index.html');
+const dist_path = path.resolve(__dirname, '../dist/public/bundle');
+const ejs_path = path.resolve(__dirname, '../dist/index.ejs');
+const html_path = path.resolve(__dirname, '../dist/public/index.html');
 
 // Hot Module Replacement (HMR)
 global.HMR = !process.argv.includes('--no-hmr');
@@ -45,7 +45,7 @@ const run = function() {
     const render = ejs.compile(template, { filename: ejs_path });
     const output = render({
       debug: true,
-      bundle: (isDebug) ? `/dist/${bundle}` : `./dist/${bundle}`,
+      bundle: (isDebug) ? `/bundle/${bundle}` : `./bundle/${bundle}`,
       htmlInjection: null,
       config
     });
@@ -57,7 +57,7 @@ const run = function() {
         port: config.environment.port,
         ui: { port: Number(config.environment.port) + 100 },
         server: {
-          baseDir: '../public',
+          baseDir: '../dist/public',
           middleware: [
             webpackDevMiddleware,
             require('webpack-hot-middleware')(compiler),

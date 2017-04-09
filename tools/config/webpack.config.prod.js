@@ -4,7 +4,7 @@
  * Fully optimize bundle files & assets
  */
 
-var path = require('path');
+const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin");
@@ -17,8 +17,8 @@ const port = require('./environment.config').prod.port;
 // Relative paths
 const src_path = path.resolve(__dirname, '../../src');
 const context = src_path;
-const dist_path = path.resolve(__dirname, '../../public/dist');
-const publicPath = '/dist/';
+const dist_path = path.resolve(__dirname, '../../dist/public/bundle');
+const publicPath = '/bundle/';
 const filename = '[name].[hash].js';
 const chunkFilename = '[id].[chunkhash].js';
 const eslint_path = path.resolve(__dirname, './.eslintrc');
@@ -32,7 +32,7 @@ const babelConfig = Object.assign({}, babelrc, {
   cacheDirectory: false,
   presets: babelrc.presets.map(x => x === 'latest' ? ['latest', { es2015: { modules: false } }] : x),
 });
-// Babel config for production
+// Babel config for development
 //babelConfig.presets.unshift("react-hmre");
 //babelConfig.plugins.unshift("react-hot-loader/babel");
 
@@ -72,10 +72,6 @@ const config = {
 
   // Plugins for Webpack compiler
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
-
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': '"production"',
       __DEV__: false,
@@ -121,7 +117,7 @@ const config = {
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      path.join(__dirname, '../../src'),
+      src_path,
       'node_modules'
     ]
   },
