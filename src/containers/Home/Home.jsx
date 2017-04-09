@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { renameProps } from 'recompose';
 
 import List from '../../components/List/List';
+import userInfoItem from './components/userInfoItem';
 
 import * as HomeAction from './HomeAction';
 
-const mapStoreToProps = store => (store.HomeReducer);
+// Map properties from data to userInfoItem props name
+const enhancedUserInfo = renameProps({
+  last_name: 'lastName',
+  first_name: 'firstName'
+})(userInfoItem);
 
+const mapStoreToProps = store => (store.HomeReducer);
 const mapActionToProps = dispatch => (
   bindActionCreators(HomeAction, dispatch)
 );
@@ -39,7 +46,11 @@ class Home extends Component {
     return (
       <div>
         <h2>Homepage</h2>
-        { this.state.loading ? <h3>Loading...</h3> : <List collection={this.props.data} /> }
+        {
+          this.state.loading ?
+            <h3>Loading...</h3> :
+            <List collection={this.props.data} Item={enhancedUserInfo} />
+        }
       </div>
     );
   }

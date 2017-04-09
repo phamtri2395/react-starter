@@ -1,19 +1,22 @@
 import React from 'react';
 
-const List = ({ collection }) => (
+
+/**
+ * List component, which accepts an array & return list of Items
+ */
+
+const List = ({ collection, Item }) => (
   <div>
-    { collection.map((el, idx) => (
-      <div key={el.id}>
-        <h4>ID: {el.id}</h4>
-        <img style={{ display: 'inline-block' }} src={el.avatar} alt={el.id} />
-        <h5>Name: {el.first_name} {el.last_name}</h5>
-      </div>
-    )) }
+    {
+      collection.map(el => (
+        <Item key={el.id} {...el} />
+      ))
+    }
   </div>
 );
 
 List.propTypes = {
-  collection: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  collection: React.PropTypes.arrayOf(React.PropTypes.object).isRequired
 };
 
 export default List;
