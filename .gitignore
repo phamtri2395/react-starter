@@ -199,8 +199,8 @@ $RECYCLE.BIN/
 0
 
 # Public
-public/dist/
-public/index.html
+dist/public/bundle
+dist/public/index.html
 
 # Documents
 documents/components/
