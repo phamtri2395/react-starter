@@ -43,6 +43,7 @@ const build = function() {
       debug: isDebug,
       bundle: `./bundle/${bundle}`,
       htmlInjection: null,
+      preloadedState: {},
       config
     });
     fs.writeFileSync(html_path, output, 'utf8');

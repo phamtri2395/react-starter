@@ -91,16 +91,35 @@ export const ReduxAction =
       new ReduxMessage(type, payload, dispatch)
     );
 
-    const execPromise = () => {
-      promise.createPromise();
-    };
+    const execPromise = () => (
+      promise.createPromise()
+    );
+
+    execPromise.promise = promise;
 
     execPromise.prev = (prev) => {
       typeof prev === 'function' && promise.before(prev);
+
+      return promise;
     };
 
     execPromise.next = (next) => {
       typeof next === 'function' && promise.then(next);
+
+      return promise;
+    };
+
+    execPromise.all = () => {
+      let lastPromise = promise;
+
+      // Find last promise in chain
+      while (lastPromise.next && lastPromise.next.promise) {
+        lastPromise = lastPromise.next.promise;
+      }
+
+      // Exec current promise before return last promise
+      execPromise();
+      return lastPromise;
     };
 
     return execPromise;

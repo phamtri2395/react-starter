@@ -47,6 +47,7 @@ const run = function() {
       debug: true,
       bundle: (isDebug) ? `/bundle/${bundle}` : `./bundle/${bundle}`,
       htmlInjection: null,
+      preloadedState: {},
       config
     });
     fs.writeFileSync(html_path, output, 'utf8');

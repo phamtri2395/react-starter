@@ -35,18 +35,50 @@ app.use(express.static(path.resolve(__dirname, './dist/public')));
 const handleRequest = function(req, res, next) {
   // Match request url with to React Router's path
   match({ routes: routes, location: req.url }, function(err, redirect, props) {
-    // Create store & pass to Router Context
-    const store = enhancedStore();
-    const appRoutes = <RouterContext {...props}/>;
+    // Handle errors
+    if (err) return next(err);
 
-    // Render the component to a string
-    const htmlInjection = renderToString(createReduxApp(store, appRoutes));
+    // Handle redirection
+    if (redirect) {
+      return res.redirect(302, redirect.pathname + redirect.search);
+    }
 
-    // Send the rendered page back to the client
-    res.render(ejs_path, {
-      htmlInjection: htmlInjection,
-      bundle: bundle_path
-    });
+    // Get components tree from react-router
+    const components = props.components;
+
+    // If the component being shown is 404 component, then send 404 status
+    if (components.some((c) => c && c.displayName === 'error-404')) {
+      res.status(404);
+    }
+
+    // Get component, which handle fetching data
+    const Comp = components[components.length - 1].WrappedComponent;
+    const getPreloadedState = (Comp && Comp.getPreloadedState) || (() => Promise.resolve());
+
+    // Create store with empty initialState
+    const initialState = {};
+    const store = enhancedStore(initialState);
+    // Get params from react-router
+    const { location, params, history } = props;
+
+    // Call static method in component to fetch preloadedState
+    getPreloadedState({ store, location, params, history }).then(() => {
+        // Route context based on current location & props
+        const appRoutes = <RouterContext {...props}/>;
+
+        // Get preloadedState after resolve promise
+        const preloadedState = store.getState();
+
+        // Render the component to a string
+        const htmlInjection = renderToString(createReduxApp(store, appRoutes));
+
+        // Send the rendered page back to the client
+        res.render(ejs_path, {
+          htmlInjection: htmlInjection,
+          bundle: bundle_path,
+          preloadedState
+        });
+      });
   });
 };
 

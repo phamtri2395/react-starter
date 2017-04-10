@@ -13,6 +13,9 @@
   <body>
     <div id="container"><%- htmlInjection %></div>
 
+    <script type="text/javascript" charset="utf-8">
+      window.__REDUX_STATE__ = <%- JSON.stringify(preloadedState) %>;
+    </script>
     <script src="<%= bundle %>"></script>
   </body>
 </html>
