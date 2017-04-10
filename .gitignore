@@ -198,7 +198,8 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/windows,macos,sublimetext,webstorm,node
 0
 
-# Public
+# Public & Dist
+dist/server.js
 dist/public/bundle/
 dist/public/index.html
 
