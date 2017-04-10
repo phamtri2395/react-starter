@@ -199,7 +199,7 @@ $RECYCLE.BIN/
 0
 
 # Public
-dist/public/bundle
+dist/public/bundle/
 dist/public/index.html
 
 # Documents
