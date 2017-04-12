@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -14,10 +15,10 @@ const userInfoItem = ({ id, firstName, lastName, avatar }) => (
 );
 
 userInfoItem.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  firstName: React.PropTypes.string.isRequired,
-  lastName: React.PropTypes.string.isRequired,
-  avatar: React.PropTypes.string.isRequired
+  id: PropTypes.number.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired
 };
 
 export default userInfoItem;

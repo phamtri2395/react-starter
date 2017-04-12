@@ -60,6 +60,7 @@
     "gulp": "^3.9.1",
     "jquery": "^3.2.1",
     "nodemon": "^1.11.0",
+    "prop-types": "^15.5.7",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
