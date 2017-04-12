@@ -8,13 +8,13 @@
     "no-useless-constructor": "off",
     "react/no-unescaped-entities": "warn",
     "react/prop-types": "warn",
-    "import/no-extraneous-dependencies": "warn",
+    "import/no-extraneous-dependencies": "off",
     "react/react-in-jsx-scope": "warn",
-    "react/jsx-filename-extension": "warn",
+    "react/jsx-filename-extension": "off",
     "global-require": "warn",
-    "no-underscore-dangle": "warn",
+    "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
-    "no-unused-expressions": "warn",
+    "no-unused-expressions": ["warn", { "allowShortCircuit": true }],
     "space-before-function-paren": "off"
   },
   "env": {
