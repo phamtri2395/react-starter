@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { renameProps } from 'recompose';
@@ -51,7 +52,7 @@ class Home extends Component {
 
   // Get store directly from Context
   static contextTypes = {
-    store: React.PropTypes.object
+    store: PropTypes.object
   }
 
   constructor(props) {

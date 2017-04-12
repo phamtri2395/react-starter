@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -17,10 +18,10 @@ const List = ({ collection, Item }) => (
 );
 
 List.propTypes = {
-  collection: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  Item: React.PropTypes.oneOfType([
-    React.PropTypes.element,
-    React.PropTypes.func
+  collection: PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  Item: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.func
   ]).isRequired
 };
 

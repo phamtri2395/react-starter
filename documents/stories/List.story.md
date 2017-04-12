@@ -10,10 +10,10 @@ const userInfoItem = ({ id, first_name, last_name, avatar }) => (
 );
 
 userInfoItem.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  firstName: React.PropTypes.string.isRequired,
-  lastName: React.PropTypes.string.isRequired,
-  avatar: React.PropTypes.string.isRequired
+  id: PropTypes.number.isRequired,
+  firstName: PropTypes.string.isRequired,
+  lastName: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired
 };
 
 const testCollection = [{
