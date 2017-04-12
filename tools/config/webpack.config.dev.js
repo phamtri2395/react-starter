@@ -141,7 +141,7 @@ const config = {
           {
             loader: 'postcss-loader',
             options: {
-              config: './postcss.config.js'
+              config: './config/postcss.config.js'
             }
           }
         ]
