@@ -3,19 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Redux starter</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Redux starter</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Google fonts & icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="icon" type="image/png" href="/favicon.png">
   </head>
   <body>
+    <!-- Hooked point for ReactJS & server-side rendering injection -->
     <div id="container"><%- htmlInjection %></div>
 
+    <!-- Preloading Redux state from ansynchronous action in server-side rendering  -->
     <script type="text/javascript" charset="utf-8">
       window.__REDUX_STATE__ = <%- JSON.stringify(preloadedState) %>;
     </script>
+
+    <!-- Main client script goes here -->
     <script src="<%= bundle %>"></script>
   </body>
 </html>
