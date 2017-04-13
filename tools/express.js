@@ -7,10 +7,12 @@
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+const compression = require('compression');
+import ejs from 'ejs';
+
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router';
-import ejs from 'ejs';
 
 import routes from '../src/redux/routes';
 import { enhancedStore } from '../src/redux/store';
@@ -23,6 +25,9 @@ const bundle_path = `.${assetsInfo.main.js}`;
 
 const app = express();
 const port = config.environment.port;
+
+// Using compression on request
+app.use(compression());
 
 // Serve static files
 app.use(express.static(path.resolve(__dirname, './dist/public')));
