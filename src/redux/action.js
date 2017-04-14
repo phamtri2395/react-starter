@@ -38,6 +38,7 @@ const ReduxPromise = function(action, message) {
   this.message = message;
   this.prev = null;
   this.next = null;
+  this.onFulfilledAction = null;
 
   this.createPromise = () => {
     typeof this.prev === 'function' && this.prev(); // Calling prev function
@@ -51,6 +52,9 @@ const ReduxPromise = function(action, message) {
 
       if (isPromise) { // If promise, resolve when promise's done
         result.then((res, err) => {
+          // Call fulfilled function
+          typeof this.onFulfilledAction === 'function' && this.onFulfilledAction(res, err);
+
           if (err) {
             this.message.error(err); // Dispatch error message
 
@@ -82,6 +86,10 @@ const ReduxPromise = function(action, message) {
   this.before = (prev) => {
     if (typeof prev === 'function') this.prev = prev;
   };
+
+  this.onFulfilled = (onFulfilledAction) => {
+    if (typeof onFulfilledAction === 'function') this.onFulfilledAction = onFulfilledAction;
+  };
 };
 
 export const ReduxAction =
@@ -96,6 +104,10 @@ export const ReduxAction =
     );
 
     execPromise.promise = promise;
+    execPromise.fulfilled = false; // isFulfilled flag
+
+    // Set flag on fulfilled promise
+    promise.onFulfilled(() => { execPromise.fulfilled = true; });
 
     execPromise.prev = (prev) => {
       typeof prev === 'function' && promise.before(prev);
