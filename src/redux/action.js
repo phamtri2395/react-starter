@@ -52,13 +52,13 @@ const ReduxPromise = function(action, message) {
 
       if (isPromise) { // If promise, resolve when promise's done
         result.then((res, err) => {
-          // Set promise status as fulfilled state
-          this.fulfilled = true;
-
           if (err) {
             this.message.error(err); // Dispatch error message
 
             typeof this.next === 'function' && this.next(null, err); // Calling next function
+
+            // Set promise status as fulfilled state
+            this.fulfilled = true;
 
             reject(err);
           }
@@ -66,6 +66,9 @@ const ReduxPromise = function(action, message) {
           this.message.success(res.body); // Dispatch success message
 
           typeof this.next === 'function' && this.next(res.body, null); // Calling next function
+
+          // Set promise status as fulfilled state
+          this.fulfilled = true;
 
           resolve(res.body);
         });
