@@ -53,26 +53,29 @@ const ReduxPromise = function(action, message) {
       if (isPromise) { // If promise, resolve when promise's done
         result.then((res, err) => {
           if (err) {
+            // Set promise status as fulfilled state
+            this.fulfilled = true;
+
             this.message.error(err); // Dispatch error message
 
             typeof this.next === 'function' && this.next(null, err); // Calling next function
 
-            // Set promise status as fulfilled state
-            this.fulfilled = true;
-
             reject(err);
           }
+
+          // Set promise status as fulfilled state
+          this.fulfilled = true;
 
           this.message.success(res.body); // Dispatch success message
 
           typeof this.next === 'function' && this.next(res.body, null); // Calling next function
 
-          // Set promise status as fulfilled state
-          this.fulfilled = true;
-
           resolve(res.body);
         });
       } else { // If not promise, return result
+        // Set promise status as fulfilled state
+        this.fulfilled = true;
+
         this.message.success(result); // Dispatch success message
 
         typeof this.next === 'function' && this.next(result, null); // Calling next function
