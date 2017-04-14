@@ -5,7 +5,7 @@
 import { messageSymbol } from '../constants/Misc';
 
 
-const ReduxMessage = function(type, payload, dispatch) {
+function ReduxMessage(type, payload, dispatch) {
   this.msg = { type, payload };
   this.dispatch = dispatch;
 
@@ -31,9 +31,9 @@ const ReduxMessage = function(type, payload, dispatch) {
       payload: errorMessage
     });
   };
-};
+}
 
-const ReduxPromise = function(action, message) {
+function ReduxPromise(action, message) {
   this.action = action;
   this.message = message;
   this.prev = null;
@@ -92,7 +92,7 @@ const ReduxPromise = function(action, message) {
   this.before = (prev) => {
     if (typeof prev === 'function') this.prev = prev;
   };
-};
+}
 
 export const ReduxAction =
   (type, payload) => action => (...args) => (dispatch) => {
