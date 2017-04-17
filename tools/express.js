@@ -21,7 +21,8 @@ import assetsInfo from '../dist/public/bundle/assets.json';
 
 const config = require('./config/config.js').server;
 const ejs_path = path.resolve(__dirname, './dist/index.ejs');
-const bundle_path = `.${assetsInfo.main.js}`;
+const bundle_js_path = `.${assetsInfo.main.js}`;
+const bundle_css_path = `.${assetsInfo.main.css}`;
 
 const app = express();
 const port = config.environment.port;
@@ -80,7 +81,8 @@ const handleRequest = function(req, res, next) {
         // Send the rendered page back to the client
         res.render(ejs_path, {
           htmlInjection: htmlInjection,
-          bundle: bundle_path,
+          bundle_js: bundle_js_path,
+          bundle_css: bundle_css_path,
           preloadedState
         });
       });

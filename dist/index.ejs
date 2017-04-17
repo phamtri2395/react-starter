@@ -12,6 +12,8 @@
     <!-- Google fonts & icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400italic,500,500italic,700,700italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- CSS bundle -->
+    <link rel="stylesheet" href="<%= bundle_css %>">
   </head>
   <body>
     <!-- Hooked point for ReactJS & server-side rendering injection -->
@@ -23,6 +25,6 @@
     </script>
 
     <!-- Main client script goes here -->
-    <script src="<%= bundle %>"></script>
+    <script src="<%= bundle_js %>"></script>
   </body>
 </html>

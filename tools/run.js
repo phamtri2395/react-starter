@@ -19,8 +19,8 @@ const html_path = path.resolve(__dirname, '../dist/public/index.html');
 // Hot Module Replacement (HMR)
 global.HMR = !process.argv.includes('--no-hmr');
 
-const isDebug = !(process.env.mode === 'prod');
-const config = (process.env.mode === 'prod') ? require('./config/config').prod : require('./config/config').dev;
+const isDebug = !(process.env.NODE_ENV === 'prod');
+const config = (process.env.NODE_ENV === 'prod') ? require('./config/config').prod : require('./config/config').dev;
 const webpackConfig = config.webpack;
 
 const run = function() {
@@ -40,12 +40,14 @@ const run = function() {
 
   compiler.plugin('done', (stats) => {
     // Generate index.html page
-    const bundle = stats.compilation.chunks.find(x => x.name === 'main').files[0];
+    const bundle_js = stats.compilation.chunks.find(x => x.name === 'main').files[0];
+    const bundle_css = stats.compilation.chunks.find(x => x.name === 'main').files[1];
     const template = fs.readFileSync(ejs_path, 'utf8');
     const render = ejs.compile(template, { filename: ejs_path });
     const output = render({
       debug: true,
-      bundle: (isDebug) ? `/bundle/${bundle}` : `./bundle/${bundle}`,
+      bundle_js: (isDebug) ? `/bundle/${bundle_js}` : `./bundle/${bundle_js}`,
+      bundle_css: (isDebug) ? `/bundle/${bundle_css}` : `./bundle/${bundle_css}`,
       htmlInjection: null,
       preloadedState: {},
       config

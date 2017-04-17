@@ -1,5 +1,5 @@
 /**
- * Webpack configuration in server mode
+ * Webpack configuration to compile Express server
  * Transform ES6 syntax in Express server file into ES5
  * Fully optimize & bundle
  */
@@ -16,6 +16,8 @@ const filename = 'server.js';
 
 // Check if verbose mode is on
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
+// Babel config
+const babelConfig = require('./babel.config').server;
 
 const config = {
   // The base directory for resolving the entry option
@@ -59,13 +61,7 @@ const config = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
-        options: {
-          presets: [
-            'es2015',
-            'stage-1',
-            'react'
-          ]
-        }
+        options: babelConfig
       }
     ]
   },

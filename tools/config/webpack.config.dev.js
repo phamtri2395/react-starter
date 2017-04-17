@@ -7,6 +7,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Host
 const host = require('./environment.config').dev.host;
@@ -27,15 +28,15 @@ const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-
 // Hot Module Replacement (HMR)
 const useHMR = !!global.HMR;
 // Babel config
-const babelrc = require('./babel.config');
+const babelrc = require('./babel.config').client;
 const babelConfig = Object.assign({}, babelrc, {
   babelrc: false,
   cacheDirectory: useHMR,
   presets: babelrc.presets.map(x => x === 'latest' ? ['latest', { es2015: { modules: false } }] : x),
 });
 // Babel config for development
-babelConfig.presets.unshift("react-hmre");
-babelConfig.plugins.unshift("react-hot-loader/babel");
+babelConfig.presets.unshift('react-hmre');
+babelConfig.plugins.unshift('react-hot-loader/babel');
 
 
 const config = {
@@ -75,8 +76,10 @@ const config = {
   // Plugins for Webpack compiler
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"development"',
-      __DEV__: true,
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development')
+      },
+      __DEV__: true
     }),
 
     // Hot Module Replacement (HMR) + React Hot Reload
@@ -93,7 +96,10 @@ const config = {
     new webpack.LoaderOptionsPlugin({
       debug: true,
       minimize: false
-    })
+    }),
+
+    // Extract compiled css into file
+    new ExtractTextPlugin('styles.css')
   ],
 
   resolve: {
@@ -123,33 +129,31 @@ const config = {
         options: babelConfig
       },
       {
-        test: /\.css/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              importLoaders: true,
-              modules: true,
-              localIdentName: '[name]_[local]_[hash:base64:3]',
-              minimize: false
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                importLoaders: true,
+                modules: true,
+                localIdentName: '[name]_[local]_[hash:base64:3]',
+                minimize: false
+              }
+            },
+            {
+              loader: 'sass-loader'
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: './config/postcss.config.js'
+              }
             }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: './config/postcss.config.js'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: 'style-loader!css-loader?modules!sass-loader'
+          ]
+        })
       },
       {
         test: /\.json$/,

@@ -9,7 +9,7 @@
       "Start server"
     ],
     "start": "gulp --gulpfile tools/gulp.js run",
-    "server": "npm run build:prod && npm run build:server && cross-env mode=server node ./dist/server.js",
+    "server": "npm run build:server && npm run build:express && cross-env NODE_ENV=server node ./dist/server.js",
     "// 2": [
       "Linter"
     ],
@@ -21,9 +21,10 @@
       "Build"
     ],
     "build": "gulp --gulpfile tools/gulp.js build",
-    "build:dev": "cross-env mode=dev npm run build",
-    "build:prod": "cross-env mode=prod npm run build",
-    "build:server": "cross-env mode=server webpack --config tools/config/webpack.config.server.js",
+    "build:dev": "cross-env NODE_ENV=dev npm run build",
+    "build:prod": "cross-env NODE_ENV=prod npm run build",
+    "build:server": "cross-env NODE_ENV=server npm run build",
+    "build:express": "cross-env NODE_ENV=server webpack --config tools/config/webpack.config.server.js",
     "// 4": [
       "Document"
     ],
@@ -79,6 +80,7 @@
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
+    "babel-plugin-css-modules-transform": "^1.2.7",
     "babel-plugin-transform-runtime": "^6.22.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-latest": "^6.22.0",
@@ -97,6 +99,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.9.0",
+    "extract-text-webpack-plugin": "^2.1.0",
     "file-loader": "^0.11.1",
     "json-loader": "^0.5.4",
     "node-sass": "^4.5.0",

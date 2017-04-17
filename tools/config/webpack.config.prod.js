@@ -7,7 +7,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Host
 const host = require('./environment.config').prod.host;
@@ -26,7 +27,7 @@ const eslint_path = path.resolve(__dirname, './.eslintrc');
 // Check if verbose mode is on
 const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
 // Babel config
-const babelrc = require('./babel.config');
+const babelrc = require('./babel.config').client;
 const babelConfig = Object.assign({}, babelrc, {
   babelrc: false,
   cacheDirectory: false,
@@ -35,6 +36,13 @@ const babelConfig = Object.assign({}, babelrc, {
 // Babel config for development
 //babelConfig.presets.unshift("react-hmre");
 //babelConfig.plugins.unshift("react-hot-loader/babel");
+
+let NODE_ENV = null;
+if (process.env.NODE_ENV === 'prod') {
+  NODE_ENV = 'production';
+} else if (process.env.NODE_ENV === 'server') {
+  NODE_ENV = 'server';
+}
 
 
 const config = {
@@ -73,8 +81,10 @@ const config = {
   // Plugins for Webpack compiler
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': '"production"',
-      __DEV__: false,
+      'process.env': {
+        'NODE_ENV': JSON.stringify(NODE_ENV)
+      },
+      __DEV__: false
     }),
 
     // Optimize the bundle in release (production) mode
@@ -105,9 +115,12 @@ const config = {
       minimize: true
     }),
 
+    // Extract compiled css into file
+    new ExtractTextPlugin('styles.css'),
+
     new CompressionPlugin({
-      asset: "[path].gz[query]",
-      algorithm: "gzip",
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
       test: /\.jsx?$|\.html$/,
       threshold: 10240,
       minRatio: 0.8
@@ -141,33 +154,31 @@ const config = {
         options: babelConfig
       },
       {
-        test: /\.css/,
-        use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: false,
-              importLoaders: true,
-              modules: true,
-              localIdentName: '[hash:base64:4]',
-              minimize: true
+        test: /\.s?css$/,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: false,
+                importLoaders: true,
+                modules: true,
+                localIdentName: '[hash:base64:4]',
+                minimize: true
+              }
+            },
+            {
+              loader: 'sass-loader'
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: './config/postcss.config.js'
+              }
             }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: './config/postcss.config.js'
-            }
-          }
-        ]
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: 'style-loader!css-loader?modules!sass-loader'
+          ]
+        })
       },
       {
         test: /\.json$/,
