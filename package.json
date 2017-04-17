@@ -9,6 +9,7 @@
       "Start server"
     ],
     "start": "gulp --gulpfile tools/gulp.js run",
+    "start:prod": "cross-env NODE_ENV=production npm run start",
     "server": "npm run build:server && npm run build:express && cross-env NODE_ENV=server node ./dist/server.js",
     "// 2": [
       "Linter"
@@ -21,8 +22,8 @@
       "Build"
     ],
     "build": "gulp --gulpfile tools/gulp.js build",
-    "build:dev": "cross-env NODE_ENV=dev npm run build",
-    "build:prod": "cross-env NODE_ENV=prod npm run build",
+    "build:dev": "cross-env NODE_ENV=development npm run build",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
     "build:server": "cross-env NODE_ENV=server npm run build",
     "build:express": "cross-env NODE_ENV=server webpack --config tools/config/webpack.config.server.js",
     "// 4": [

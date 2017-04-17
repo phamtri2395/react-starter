@@ -11,9 +11,9 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Host
-const host = require('./environment.config').prod.host;
+const host = require('./environment.config').production.host;
 // Environment port
-const port = require('./environment.config').prod.port;
+const port = require('./environment.config').production.port;
 
 // Relative paths
 const src_path = path.resolve(__dirname, '../../src');
@@ -38,7 +38,7 @@ const babelConfig = Object.assign({}, babelrc, {
 //babelConfig.plugins.unshift("react-hot-loader/babel");
 
 let NODE_ENV = null;
-if (process.env.NODE_ENV === 'prod') {
+if (process.env.NODE_ENV === 'production') {
   NODE_ENV = 'production';
 } else if (process.env.NODE_ENV === 'server') {
   NODE_ENV = 'server';

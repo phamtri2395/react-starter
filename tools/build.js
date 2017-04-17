@@ -22,8 +22,8 @@ const html_path = path.resolve(__dirname, '../dist/public/index.html');
 // Hot Module Replacement (HMR)
 global.HMR = !process.argv.includes('--no-hmr');
 
-const isDebug = !(process.env.NODE_ENV === 'prod');
-const config = (process.env.NODE_ENV === 'prod' || process.env.NODE_ENV ==='server') ? require('./config/config').prod : require('./config/config').dev;
+const isDebug = !(process.env.NODE_ENV === 'production');
+const config = (process.env.NODE_ENV === 'production' || process.env.NODE_ENV ==='server') ? require('./config/config').production : require('./config/config').development;
 const webpackConfig = config.webpack;
 
 const build = function() {

@@ -10,9 +10,9 @@ const AssetsPlugin = require('assets-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // Host
-const host = require('./environment.config').dev.host;
+const host = require('./environment.config').development.host;
 // Environment port
-const port = require('./environment.config').dev.port;
+const port = require('./environment.config').development.port;
 
 // Relative paths
 const src_path = path.resolve(__dirname, '../../src');

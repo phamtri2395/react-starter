@@ -10,18 +10,18 @@ var webpackServerConfig = require('./webpack.config.server');
 
 exports = module.exports = {};
 
-exports.dev = {
+exports.development = {
   webpack: webpackDevConfig,
-  environment: environment.dev
+  environment: environment.development
 };
 
 exports.story = {
   environment: environment.story
 };
 
-exports.prod = {
+exports.production = {
   webpack: webpackProdConfig,
-  environment: environment.prod
+  environment: environment.production
 };
 
 exports.server = {
