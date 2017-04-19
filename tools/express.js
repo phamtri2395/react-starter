@@ -95,7 +95,7 @@ const handleRequest = function(req, res, next) {
  */
 
 // Apply server-side rendering
-app.get('*', handleRequest);
+app.use(handleRequest);
 
 app.listen(port, function() {
   console.log('Server is up & running on port', port);
