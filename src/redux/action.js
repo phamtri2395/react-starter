@@ -44,7 +44,7 @@ function ReduxPromise(action, message) {
     typeof this.prev === 'function' && this.prev(); // Calling prev function
 
     return new Promise((resolve, reject) => {
-      const result = this.action();
+      const result = this.action ? this.action() : this.message.payload;
       this.message.submit(); // Dispatch submit message
 
       // Check if action is promise
@@ -94,10 +94,53 @@ function ReduxPromise(action, message) {
   };
 }
 
-export const ReduxAction =
+export const ReduxAsyncAction =
   (type, payload) => action => (...args) => (dispatch) => {
     const promise = new ReduxPromise(
       () => action(...args),
+      new ReduxMessage(type, payload, dispatch)
+    );
+
+    const execPromise = () => {
+      promise.createPromise();
+
+      return promise;
+    };
+
+    execPromise.promise = promise;
+
+    execPromise.prev = (prev) => {
+      typeof prev === 'function' && promise.before(prev);
+
+      return execPromise;
+    };
+
+    execPromise.next = (next) => {
+      typeof next === 'function' && promise.then(next);
+
+      return execPromise;
+    };
+
+    execPromise.all = () => {
+      let lastPromise = promise;
+
+      // Find last promise in chain
+      while (lastPromise.next && lastPromise.next.promise) {
+        lastPromise = lastPromise.next.promise;
+      }
+
+      // Exec current promise before return last promise
+      execPromise();
+      return lastPromise;
+    };
+
+    return execPromise;
+  };
+
+export const ReduxSyncAction =
+  type => payload => (dispatch) => {
+    const promise = new ReduxPromise(
+      null,
       new ReduxMessage(type, payload, dispatch)
     );
 
