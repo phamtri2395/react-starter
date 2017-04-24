@@ -177,5 +177,5 @@ export const ReduxSyncAction =
       return lastPromise;
     };
 
-    return execPromise;
+    return execPromise();
   };
