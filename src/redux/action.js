@@ -17,11 +17,9 @@ function ReduxMessage(type, payload, dispatch) {
   };
 
   this.success = (newPayload) => {
-    const mergedPayload = { ...this.msg.payload, ...newPayload };
-
     this.dispatch({
       type: messageSymbol.success(this.msg.type),
-      payload: mergedPayload
+      payload: newPayload
     });
   };
 
@@ -44,7 +42,7 @@ function ReduxPromise(action, message) {
     typeof this.prev === 'function' && this.prev(); // Calling prev function
 
     return new Promise((resolve, reject) => {
-      const result = this.action ? this.action() : this.message.payload;
+      const result = this.action ? this.action() : this.message.msg.payload;
       this.message.submit(); // Dispatch submit message
 
       // Check if action is promise
